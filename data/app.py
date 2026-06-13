@@ -2,21 +2,20 @@ import dash
 from dash import dcc, html
 import pandas as pd
 
-# Load data
+
 df = pd.read_csv(
     r"C:\Users\ibsle\Documents\quantium-starter-repo\data\sales.txt",
     header=None,
     names=["sales", "date", "region"]
 )
 
-# Convert types
+
 df["sales"] = df["sales"].astype(float)
 df["date"] = pd.to_datetime(df["date"])
 
-# 🔥 IMPORTANT: aggregate data
+
 df = df.groupby(["date", "region"], as_index=False)["sales"].sum()
 
-# Sort after grouping
 df = df.sort_values("date")
 
 app = dash.Dash(__name__)
